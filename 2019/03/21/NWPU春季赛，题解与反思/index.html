@@ -8,7 +8,7 @@
   <title>NWPU春季赛，题解与反思 | ↑↓CH2&#39;s Space</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="正式赛题目：https://www.luogu.org/contestnew/show/15288 兴冲冲去打校赛。结果：三题死。爆炸的理所当然，也确实反映了自己的不少问题。  上午热身赛5T，A了4个（热身赛比正式赛A的多系列==）不知为何题目一直没有放出来，目前也没有题解。（@Acoder出来写题解……） ABD裸送，关键是C（题目名：水 题）和E。 E题是跟某位大佬讨论才做出来的。题目描述：">
-<meta name="keywords" content="题解 反思">
+<meta name="keywords" content="题解,反思">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NWPU春季赛，题解与反思">
 <meta property="og:url" content="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/index.html">
@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/SPFA,它死了.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/穹链剖分.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/kokoa.png">
-<meta property="og:updated_time" content="2019-03-21T11:54:06.927Z">
+<meta property="og:updated_time" content="2019-03-21T12:10:21.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NWPU春季赛，题解与反思">
 <meta name="twitter:description" content="正式赛题目：https://www.luogu.org/contestnew/show/15288 兴冲冲去打校赛。结果：三题死。爆炸的理所当然，也确实反映了自己的不少问题。  上午热身赛5T，A了4个（热身赛比正式赛A的多系列==）不知为何题目一直没有放出来，目前也没有题解。（@Acoder出来写题解……） ABD裸送，关键是C（题目名：水 题）和E。 E题是跟某位大佬讨论才做出来的。题目描述：">
@@ -102,7 +102,7 @@
 <p>C题：n(&lt;=10^5)个元素，q(&lt;=10^5)个询问，每次求区间在[i,j]范围、数值在[a,b]范围的数的异或和。<br>首先想到先排序，把问题转变为新下标在[s[a],s[b]]之间，原下标在[i,j]之间的异或和。这样可能可以初始化区间异或和来简化问题。<br>然后呢？分块+线段树？树套树？于是跑路了。并不怎么会数据结构题。</p>
 <hr>
 <p>下午的比赛，被A题彻底卡死。看到那么多人<font color="green">AC</font>了，题目又偏水，一直试图做出来，一直莫名<font color="red">WA</font>，换了种暴力做法继续<font color="red">WA</font>。考完结果告诉我数据有问题……<br>（彩笔不会切割线定理，究竟是谁的锅？）  </p>
-<p>但关键问题并不是一道题的得失。<strong>在赛场上，有一道题目，排名在你后面一排的都A了，而你还在<font color="red"><ruby>大红<rt>W A</rt></ruby></font><font color="purple"><ruby>大紫<rt>R E</rt></ruby></font>，你还能保持住良好的心态，继续思考别的题目吗？</strong>  </p>
+<p>但关键问题并不是一道题的得失。<strong>在赛场上，有一道题目，排名在你后面一排的都<font color="green">A</font>了，而你还在<font color="red"><ruby>大红<rt>W A</rt></ruby></font><font color="purple"><ruby>大紫<rt>R E</rt></ruby></font>，你还能保持住良好的心态，继续思考别的题目吗？</strong>  </p>
 <p>显然，我在这点上失败了。后面几乎每看一道题，看着看着都要回来改改A题。结果导致很多本来可以做出来的题目zz了。当然菜也是一方面，不然N道题直接水过去了；但更关键的是心态问题，<strong>在紧张的ACM赛制下，心态的好坏是导致最终成败与否的最关键的临场因素。</strong>  </p>
 <p>之前还有一段小插曲：我搞错了开始时间，1点开始的比赛，我以为两点才开始，于是蜜汁失去了45min。时间的失去不是最重要的，更为要命的是对心态的打击。再加上A题没搞出来，节奏彻底乱了套。所以下面的许多题，不是脑子糊涂就是各种zz。以这样的状态，原地爆炸实在不出所料。  </p>
 <p>B题==乱搞，n年前研究过，后来做了个不太一样的题目，结果现在想的太多，凉了。</p>
@@ -132,25 +132,15 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjtikxwlk0000270j3fxhulf1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjtip31s00001kr0j7qb8c3ea" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解-反思/">题解 反思</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
 
     </footer>
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2019/03/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -165,7 +155,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/题解-反思/">题解 反思</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/反思/">反思</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/题解/">题解</a></li></ul>
     </div>
   </div>
 
@@ -175,7 +165,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/题解-反思/" style="font-size: 10px;">题解 反思</a>
+      <a href="/tags/反思/" style="font-size: 10px;">反思</a> <a href="/tags/题解/" style="font-size: 10px;">题解</a>
     </div>
   </div>
 
@@ -198,10 +188,6 @@
         
           <li>
             <a href="/2019/03/21/NWPU春季赛，题解与反思/">NWPU春季赛，题解与反思</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/20/hello-world/">Hello World</a>
           </li>
         
       </ul>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>2018焦作站现场赛E题 | ↑↓CH2&#39;s Space</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="水题没人写题解，都直接上Java代码……那我写一个。  计蒜客题面：https://nanti.jisuanke.com/t/A2203题意：如果i是完全平方数(&amp;gt;=4)的倍数，那么i号电阻的阻值为无穷大，否则为i。现在有编号为1~n的集合，每个集合包含若干个电阻，编号为i的集合包含所有编号为i的约数的电阻。求一个集合，使该集合内所有电阻的并联阻值最小。关键的来了：n&amp;lt;=10100">
+<meta name="keywords" content="题解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018焦作站现场赛E题">
+<meta property="og:url" content="http://yoursite.com/2019/03/29/2018焦作站E题/index.html">
+<meta property="og:site_name" content="↑↓CH2&#39;s Space">
+<meta property="og:description" content="水题没人写题解，都直接上Java代码……那我写一个。  计蒜客题面：https://nanti.jisuanke.com/t/A2203题意：如果i是完全平方数(&amp;gt;=4)的倍数，那么i号电阻的阻值为无穷大，否则为i。现在有编号为1~n的集合，每个集合包含若干个电阻，编号为i的集合包含所有编号为i的约数的电阻。求一个集合，使该集合内所有电阻的并联阻值最小。关键的来了：n&amp;lt;=10100">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-29T14:48:23.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018焦作站现场赛E题">
+<meta name="twitter:description" content="水题没人写题解，都直接上Java代码……那我写一个。  计蒜客题面：https://nanti.jisuanke.com/t/A2203题意：如果i是完全平方数(&amp;gt;=4)的倍数，那么i号电阻的阻值为无穷大，否则为i。现在有编号为1~n的集合，每个集合包含若干个电阻，编号为i的集合包含所有编号为i的约数的电阻。求一个集合，使该集合内所有电阻的并联阻值最小。关键的来了：n&amp;lt;=10100">
+  
+    <link rel="alternate" href="/atom.xml" title="↑↓CH2&#39;s Space" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">↑↓CH2&#39;s Space</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018焦作站E题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/29/2018焦作站E题/" class="article-date">
+  <time datetime="2019-03-29T14:48:48.594Z" itemprop="datePublished">2019-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2018焦作站现场赛E题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="水题没人写题解，都直接上Java代码……那我写一个。"><a href="#水题没人写题解，都直接上Java代码……那我写一个。" class="headerlink" title="水题没人写题解，都直接上Java代码……那我写一个。  "></a>水题没人写题解，都直接上Java代码……那我写一个。  </h2><p><a href="https://nanti.jisuanke.com/t/A2203" target="_blank" rel="noopener">计蒜客题面：https://nanti.jisuanke.com/t/A2203</a><br>题意：如果i是完全平方数(&gt;=4)的倍数，那么i号电阻的阻值为无穷大，否则为i。<br>现在有编号为1~n的集合，每个集合包含若干个电阻，编号为i的集合包含所有编号为i的约数的电阻。求一个集合，使该集合内所有电阻的并联阻值最小。<br>关键的来了：n&lt;=10<sup>100</sup></p>
+<hr>
+<p>首先，对于一个电阻，如果它能改变总电阻，那么着它的阻值不是无穷大，因此它的每个质因子最多被乘了一次。所以对于每个电阻的集合，它的编号的约数中，只有1、质因数、以及若干个不同质因数的积是有效的。另外，<strong>如果一个数的约数包含了若干个质因数，那么这个数的约数也必然包含这些质因数的积。</strong> 这样，只要选出积不超过n的若干个质数，再加上公共约数1，就是要找的集合。  </p>
+<p>那么选取哪些质数呢？从让阻值尽量大的角度来讲，在质因子数量相同的情况下，应当选择尽量小的质数。以比较集合6和集合10为例，6=1×2×3,10=1×2×5,显然电阻5和(2×5=10)两个电阻都比3和(2×3=6)的阻值大，因此质因子5不如质因子3优。另外，由于要选的集合编号不超过n，在质因子数量相同的情况下，如果能选较大的质因子，必然能选编号较小的质因子。因此选质因子的策略为：<strong>在质因子的积不超过n的前提下，尽量选取最小的质因子</strong>，即依次选取2,3,5,7……  </p>
+<p>然后就是计算总电阻。题目给了电阻公式，此处R<sub>1</sub>,R<sub>2</sub>,R<sub>3</sub>,R<sub>4</sub>……R<sub>k</sub>依次等于1,2,3,5……(2×3×5×……×p)，其中p为最大的质因子。</p>
+<p>上下同时乘以R<sub>k</sub>，得到：R=R<sub>k</sub>/(1+2+3+5+……+p+2×3+2×5+3×5+……+2×3×5+……+R<sub>k</sub>)<br>分母中，对于每一个含有p的项，提取p，得：p×(1+2+3+5+……+2×3+2×5+3×5+……)+(1+2+3+5+……+2×3+2×5+3×5……)=(p+1)×(1+2+3+5+……+2×3+2×5+3×5+……)<br>观察发现，(p+1)的系数是不取p的情况下的分母值。那么这个分母就形成了递推式，后一项是前一项的p+1倍，第一项为1。这样用递推式求出分母，约分即可。<br>用欧拉筛预处理出前若干项质数，它们的积至少要超过n的最大值10<sup>100</sup>，经过验证，求出前300项质数已经足够了。<br>然后就是py= = Java不会(而且高精度类似乎比较糟)，c++……考场手打高精度？？？<br>人生苦短，我用python。  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">m,l=<span class="number">300</span>,<span class="number">0</span></span><br><span class="line">prime,a=[],[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,m+<span class="number">1</span>):</span><br><span class="line">    a.append(<span class="number">1</span>)</span><br><span class="line">a[<span class="number">1</span>]=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,m+<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> a[i]:</span><br><span class="line">        prime.append(i)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> prime:</span><br><span class="line">        <span class="keyword">if</span> i*j&gt;m:<span class="keyword">break</span></span><br><span class="line">        a[i*j]=<span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> i%j:<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">T=int(input())</span><br><span class="line"><span class="keyword">for</span> o <span class="keyword">in</span> range(<span class="number">0</span>,T):</span><br><span class="line">    n=int(input())</span><br><span class="line">    h,k=<span class="number">1</span>,<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> prime:</span><br><span class="line">        <span class="keyword">if</span> h*i&gt;n:<span class="keyword">break</span></span><br><span class="line">        h*=i</span><br><span class="line">        k+=<span class="number">1</span></span><br><span class="line">    f=[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,k+<span class="number">1</span>):</span><br><span class="line">        f.append(f[i<span class="number">-1</span>]*(prime[i<span class="number">-1</span>]+<span class="number">1</span>))</span><br><span class="line">    g=math.gcd(h,f[k])</span><br><span class="line">    print(h//g,end=<span class="string">'/'</span>)</span><br><span class="line">    print(f[k]//g)</span><br></pre></td></tr></table></figure>
+<!-- 可以发现，p的系数和不含p的常数项是相同的，而且是电阻   -->
+<!-- 分母提取1，得：1+(2+3+5+……)+(2×3+2*5+……)+……  
+分母提取2，得：1+(2+3+5+……)+2(2+3+5+……)+2×(3×5+……) -->
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/29/2018焦作站E题/" data-id="cjtu6n1u500032w0jtij424d8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/21/CSP认证划水记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CSP认证划水记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/反思/">反思</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/题解/">题解</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/反思/" style="font-size: 10px;">反思</a> <a href="/tags/题解/" style="font-size: 20px;">题解</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/03/29/2018焦作站E题/">2018焦作站现场赛E题</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/21/CSP认证划水记/">CSP认证划水记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/21/NWPU春季赛，题解与反思/">NWPU春季赛，题解与反思</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 ↑↓CH2<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

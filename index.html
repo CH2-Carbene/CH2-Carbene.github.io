@@ -65,6 +65,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Codeforces-Round-550-Div-3-G题题解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/01/Codeforces-Round-550-Div-3-G题题解/" class="article-date">
+  <time datetime="2019-03-31T17:38:05.919Z" itemprop="datePublished">2019-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/01/Codeforces-Round-550-Div-3-G题题解/">Codeforces Round #550 (Div.3) G题题解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="人生第一个独立完成的CF压轴题？"><a href="#人生第一个独立完成的CF压轴题？" class="headerlink" title="人生第一个独立完成的CF压轴题？"></a>人生第一个独立完成的CF压轴题？</h2><p>(然而是Div3+赛后才做出来，彩笔)</p>
+<p>首先是dp思路(一看就是dp，不多解释)：考虑到每个点要么被放到升序队列，要么放到降序队列，那么只要让当前升序队列最后一个数尽量小，降序队列最后一个数尽量大就可以了。 </p>
+<p>f[i][1]表示把a[i]放到升序队列，此时降序队列队尾最大值(升序队列队尾最小值就是a[i]，不用记录)；f[i][2]表示把a[i]放到降序队列，此时升序队列队尾最小值。(同理降序队列队尾最小值就是a[i])</p>
+<p>状态出来了，转移也很明显：当前元素a[i]如果能放到升序队列，那么它必然比升序队列队尾元素大。如果a[i-1]放在升序队列，此时降序队列队尾就是f[i-1][1];如果a[i-1]放在降序队列，此时升序队列队尾是f[i-1][2]。每种情况在满足a[i]大于升序队列队尾的情况下，f[i][1]取两个降序队列队尾的最大值。<br>所以得到转移方程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][1]=max(f[i-1][1](a[i]&gt;a[i-1]),a[i-1](a[i]&gt;f[i-1][2]))</span><br></pre></td></tr></table></figure></p>
+<p>转移的时候顺便把”f[i][1]是由哪个队列的a[i-1]转移而来”记录下来，便于统计答案。<br>f[i][2]类似处理，请自行推导。  </p>
+<p>AC代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">400000</span>],f[<span class="number">400000</span>][<span class="number">3</span>],lst[<span class="number">400000</span>][<span class="number">3</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	f[<span class="number">1</span>][<span class="number">1</span>]=INF,f[<span class="number">1</span>][<span class="number">2</span>]=<span class="number">-1</span>;<span class="comment">//f[i][1]:a[i]放在单调增队列末尾，此时单调减队列的最大值;f[i][2]:a[i]放在单调减队列末尾，此时单调增队列的最小值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		f[i][<span class="number">1</span>]=<span class="number">-1</span>,f[i][<span class="number">2</span>]=INF;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=f[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;f[i<span class="number">-1</span>][<span class="number">2</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">2</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=f[i<span class="number">-1</span>][<span class="number">2</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;f[i<span class="number">-1</span>][<span class="number">1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> lw=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(f[n][<span class="number">1</span>]!=<span class="number">-1</span>)&#123;</span><br><span class="line">		lw=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(f[n][<span class="number">2</span>]!=INF)&#123;</span><br><span class="line">		lw=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!lw)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"NO\n"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"YES\n"</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;ans;ans.push(lw);</span><br><span class="line">	<span class="keyword">int</span> now=lw;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;<span class="number">1</span>;--i)&#123;</span><br><span class="line">		ans.push(lst[i][now]);</span><br><span class="line">		now=lst[i][now];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(!ans.empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans.top()<span class="number">-1</span>&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">		ans.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/01/Codeforces-Round-550-Div-3-G题题解/" data-id="cjtx7kf3b0005gf0jgz3assug" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-2018焦作站E题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/29/2018焦作站E题/" class="article-date">
@@ -100,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/29/2018焦作站E题/" data-id="cjtu6n1u500032w0jtij424d8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/29/2018焦作站E题/" data-id="cjtx7kf390004gf0j9h3kzezn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
@@ -162,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/CSP认证划水记/" data-id="cjtu6n1u800042w0jsfr4z3qm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/CSP认证划水记/" data-id="cjtx7kf3d0008gf0jvc7171ff" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
@@ -236,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjtu6n1ut000c2w0jiugfclpu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjtx7kf3f000agf0jm7iqwyor" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/题解/">题解</a></li></ul>
@@ -280,7 +325,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
     </div>
   </div>
 
@@ -291,6 +336,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/01/Codeforces-Round-550-Div-3-G题题解/">Codeforces Round #550 (Div.3) G题题解</a>
+          </li>
         
           <li>
             <a href="/2019/03/29/2018焦作站E题/">2018焦作站现场赛E题</a>

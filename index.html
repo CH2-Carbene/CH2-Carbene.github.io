@@ -65,6 +65,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Codeforces-Round-551-Div-2-D、E题解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/15/Codeforces-Round-551-Div-2-D、E题解/" class="article-date">
+  <time datetime="2019-04-15T10:46:58.037Z" itemprop="datePublished">2019-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/题解/">题解</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/15/Codeforces-Round-551-Div-2-D、E题解/">Codeforces Round #551 (Div. 2) D、E题解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>D:一棵树有n(2≤n≤3e5)个节点，其中有k个叶子节点，叶子节点的值是1~k的任意一个排列(自己定)，非叶子节点的值是它所有儿子的最大值或者最小值。求根节点(1号)可以拥有的最大值。<br>自底向上树形dp。如果一个节点为max节点，那么不妨只保留一个儿子作为结果的最大值，而令其他儿子的子孙叶子节点尽可能小。这相当于删去了其他儿子，并把这个节点的度变为1。显然，度为1的max节点和min节点是等价的。所以经过若干次操作，这棵树只剩下min节点，所以答案就是剩下的叶子节点的最小值，即(k-w+1)，其中w为剩下的叶子节点数。(1,2,…,k-w在max节点中被”比下去”了，也就相当于被删除了)所以，为了让w尽量大，我们总是希望删除尽量多的叶子节点。因此，统计每个节点的子孙叶子节点数量，max节点只保留拥有最少的子孙叶子节点的儿子，同时还要累记被删掉的节点数量。<br>$$f[i]=\begin{cases}<br>sum(f[j:st[i].son]) &amp;i为min点 \<br>min(f[j:st[i].son]) &amp; i为max点<br>\end{cases}$$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> fa,sh;<span class="comment">//,nleaf;</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;son;</span><br><span class="line">&#125;st[<span class="number">400000</span>];</span><br><span class="line"><span class="keyword">int</span> k=<span class="number">1</span>,a[<span class="number">400000</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp;now)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(st[now].son.size())&#123;</span><br><span class="line">		<span class="keyword">int</span> minm=INT_MAX,sum=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">auto</span>&amp;x:st[now].son)&#123;</span><br><span class="line">			dfs(x);</span><br><span class="line">			minm=min(minm,st[x].sh);</span><br><span class="line">			sum+=st[x].sh;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[now])&#123;</span><br><span class="line">			st[now].sh=minm;</span><br><span class="line">			k+=sum-minm;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> st[now].sh=sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		st[now].sh=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> f;<span class="built_in">cin</span>&gt;&gt;f;</span><br><span class="line">		st[i].fa=f;</span><br><span class="line">		st[f].son.push_back(i);</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;k&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>E题难受了……本来可以做出来，结果前面太磨蹭，然后还搞错了结束时间，结果莫名其妙提前放弃了……最后5分钟还在纳闷怎么还没结束……<br>不过赛后还是AC了(彩笔人生第一道交互题)。思路很简单：如果某个矩形包含了蛇的头或者蛇的尾中的一个，那么回答是奇数；否则是偶数。由于有2019次询问机会，而n不超过1000，因此可以询问n个1×n的矩形和n个n×1的矩形，找奇数的回答，就是头或者尾所在的坐标。如果头和尾既不在同一行也不在同一列，那么头和尾的坐标也都确定下来了，对4种可能的点分别询问一下即可。如果头和尾在同一行，那么通过之前的询问只能知道头和尾分别在哪一列，因此还要用二分查找确定在它们在哪一行。头和尾在同一列同理。<br>本题虽然思路简单，但实现比较繁琐，因此AC代码不贴了。<br>以上。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/15/Codeforces-Round-551-Div-2-D、E题解/" data-id="cjui8i7ai000h3z0jlvj13s8v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/二分查找/">二分查找</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树形dp/">树形dp</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Codeforces-Global-Round-2-D、E题解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/15/Codeforces-Global-Round-2-D、E题解/" class="article-date">
@@ -102,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/15/Codeforces-Global-Round-2-D、E题解/" data-id="cjui3volj000aer0jn4hylcqp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/15/Codeforces-Global-Round-2-D、E题解/" data-id="cjui8i7aa000d3z0jzhyjkgxr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前缀和/">前缀和</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线段覆盖/">线段覆盖</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
@@ -153,7 +198,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/15/2018焦作站E题/" data-id="cjui3vola0005er0j9r20ehhf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/15/2018焦作站E题/" data-id="cjui8i7a600093z0jh2komk51" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/质因数/">质因数</a></li></ul>
@@ -202,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/15/Codeforces-Round-550-Div-3-G题题解/" data-id="cjui3volk000ber0jn17xskd5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/15/Codeforces-Round-550-Div-3-G题题解/" data-id="cjui8i7ad000f3z0j66pdx2r1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li></ul>
@@ -268,7 +313,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/CSP认证划水记/" data-id="cjui3volc0006er0jeh0cp5zf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/CSP认证划水记/" data-id="cjui8i7a8000a3z0jow63kzqu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li></ul>
@@ -346,7 +391,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjui3volm000eer0jouo0nstv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/" data-id="cjui8i7am000j3z0jnkce9f0e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Chino赛高/">Chino赛高</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SPFA/">SPFA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/map优化dp/">map优化dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反思/">反思</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/平面几何/">平面几何</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树形dp/">树形dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/状压dp/">状压dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/组合数学/">组合数学</a></li></ul>
@@ -378,7 +423,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chino赛高/">Chino赛高</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPFA/">SPFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map优化dp/">map优化dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前缀和/">前缀和</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反思/">反思</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/平面几何/">平面几何</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/树形dp/">树形dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状压dp/">状压dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线段覆盖/">线段覆盖</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组合数学/">组合数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/质因数/">质因数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chino赛高/">Chino赛高</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPFA/">SPFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map优化dp/">map优化dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分查找/">二分查找</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前缀和/">前缀和</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反思/">反思</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/平面几何/">平面几何</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/树形dp/">树形dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状压dp/">状压dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线段覆盖/">线段覆盖</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组合数学/">组合数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/质因数/">质因数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/贪心/">贪心</a></li></ul>
     </div>
   </div>
 
@@ -388,7 +433,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Chino赛高/" style="font-size: 10px;">Chino赛高</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/map优化dp/" style="font-size: 10px;">map优化dp</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/反思/" style="font-size: 20px;">反思</a> <a href="/tags/平面几何/" style="font-size: 10px;">平面几何</a> <a href="/tags/树形dp/" style="font-size: 10px;">树形dp</a> <a href="/tags/状压dp/" style="font-size: 10px;">状压dp</a> <a href="/tags/线段覆盖/" style="font-size: 10px;">线段覆盖</a> <a href="/tags/组合数学/" style="font-size: 10px;">组合数学</a> <a href="/tags/质因数/" style="font-size: 10px;">质因数</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a>
+      <a href="/tags/Chino赛高/" style="font-size: 10px;">Chino赛高</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/map优化dp/" style="font-size: 10px;">map优化dp</a> <a href="/tags/二分查找/" style="font-size: 10px;">二分查找</a> <a href="/tags/前缀和/" style="font-size: 10px;">前缀和</a> <a href="/tags/反思/" style="font-size: 20px;">反思</a> <a href="/tags/平面几何/" style="font-size: 10px;">平面几何</a> <a href="/tags/树形dp/" style="font-size: 20px;">树形dp</a> <a href="/tags/状压dp/" style="font-size: 10px;">状压dp</a> <a href="/tags/线段覆盖/" style="font-size: 10px;">线段覆盖</a> <a href="/tags/组合数学/" style="font-size: 10px;">组合数学</a> <a href="/tags/质因数/" style="font-size: 10px;">质因数</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a>
     </div>
   </div>
 
@@ -410,6 +455,10 @@
       <ul>
         
           <li>
+            <a href="/2019/04/15/Codeforces-Round-551-Div-2-D、E题解/">Codeforces Round #551 (Div. 2) D、E题解</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/15/Codeforces-Global-Round-2-D、E题解/">Codeforces Global Round 2 D、E题解</a>
           </li>
         
@@ -423,10 +472,6 @@
         
           <li>
             <a href="/2019/03/21/CSP认证划水记/">CSP认证划水记</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/21/NWPU春季赛，题解与反思/">NWPU春季赛，题解与反思</a>
           </li>
         
       </ul>

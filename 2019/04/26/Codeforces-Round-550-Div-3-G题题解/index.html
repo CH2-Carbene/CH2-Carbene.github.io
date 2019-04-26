@@ -83,7 +83,7 @@
 <meta name="keywords" content="dp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Codeforces Round #550 (Div.3) G题题解">
-<meta property="og:url" content="http://yoursite.com/2019/04/15/Codeforces-Round-550-Div-3-G题题解/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/index.html">
 <meta property="og:site_name" content="↑↓CH2&#39;s Space">
 <meta property="og:description" content="人生第一个独立完成的CF压轴题？(然而是Div3+赛后才做出来，彩笔) 首先是dp思路(一看就是dp，不多解释)：考虑到每个点要么被放到升序队列，要么放到降序队列，那么只要让当前升序队列最后一个数尽量小，降序队列最后一个数尽量大就可以了。  f[i][1]表示把a[i]放到升序队列，此时降序队列队尾最大值(升序队列队尾最小值就是a[i]，不用记录)；f[i][2]表示把a[i]放到降序队列，此时升">
 <meta property="og:locale" content="zh-Hans">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/15/Codeforces-Round-550-Div-3-G题题解/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/">
 
 
 
@@ -221,12 +221,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404/" rel="section">
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
             
-            公益404
+            日程表
           </a>
         </li>
       
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/Codeforces-Round-550-Div-3-G题题解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="↑↓CH2">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T16:15:43+08:00">
-                2019-04-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T22:42:07+08:00">
+                2019-04-26
               </time>
             
 
@@ -327,6 +327,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/Codeforces-Round-550-Div-3-G题题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/26/Codeforces-Round-550-Div-3-G题题解/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -389,8 +399,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/21/CSP认证划水记/" rel="next" title="CSP认证划水记">
-                <i class="fa fa-chevron-left"></i> CSP认证划水记
+              <a href="/2019/04/26/Codeforces-Round-551-Div-2-D、E题解/" rel="next" title="Codeforces Round #551 (Div. 2) D、E题解">
+                <i class="fa fa-chevron-left"></i> Codeforces Round #551 (Div. 2) D、E题解
               </a>
             
           </div>
@@ -399,7 +409,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/15/Codeforces-Global-Round-2-D、E题解/" rel="prev" title="Codeforces Global Round 2 D、E题解">
+              <a href="/2019/04/26/Codeforces-Global-Round-2-D、E题解/" rel="prev" title="Codeforces Global Round 2 D、E题解">
                 Codeforces Global Round 2 D、E题解 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -429,6 +439,16 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
 
   
 
@@ -480,7 +500,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -502,7 +522,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -536,10 +556,6 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="https://loliconautomaton.github.io/" title="WSY巨佬" target="_blank">WSY巨佬</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/qq_44202946" title="本彩笔的csdn" target="_blank">本彩笔的csdn</a>
                   </li>
                 
               </ul>
@@ -648,6 +664,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -686,6 +705,16 @@
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
 
   
 
@@ -721,6 +750,26 @@
 
   
 
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/';
+          this.page.identifier = '2019/04/26/Codeforces-Round-550-Div-3-G题题解/';
+          this.page.title = 'Codeforces Round #550 (Div.3) G题题解';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="树形dp,乱搞,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这次CF最终还是unrated了。虽然A题无限WApoint3（包括本菜在内）很容易让大家心态爆炸，但个人认为，B、C题做的好坏更为关键（这次的B和C都不是特别简单，需要仔细思考一下，否则很容易出错）。B题我采用的判断方法是奇偶字母分开，再把整个奇数序列放在偶数序列的前面或者后面，判断两序列交界的两个字母是否不相邻，如果两种方法都不可行就说明无解。C题主要是二分的策略问题，数值小的作为左端点优，数">
+<meta name="keywords" content="树形dp,乱搞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Educational Codeforces Round 64 (Rated for Div. 2)题解(DE)">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/Educational-Codeforces-Round-64-D、E题解/index.html">
+<meta property="og:site_name" content="↑↓CH2&#39;s Space">
+<meta property="og:description" content="这次CF最终还是unrated了。虽然A题无限WApoint3（包括本菜在内）很容易让大家心态爆炸，但个人认为，B、C题做的好坏更为关键（这次的B和C都不是特别简单，需要仔细思考一下，否则很容易出错）。B题我采用的判断方法是奇偶字母分开，再把整个奇数序列放在偶数序列的前面或者后面，判断两序列交界的两个字母是否不相邻，如果两种方法都不可行就说明无解。C题主要是二分的策略问题，数值小的作为左端点优，数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-02T18:28:32.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Educational Codeforces Round 64 (Rated for Div. 2)题解(DE)">
+<meta name="twitter:description" content="这次CF最终还是unrated了。虽然A题无限WApoint3（包括本菜在内）很容易让大家心态爆炸，但个人认为，B、C题做的好坏更为关键（这次的B和C都不是特别简单，需要仔细思考一下，否则很容易出错）。B题我采用的判断方法是奇偶字母分开，再把整个奇数序列放在偶数序列的前面或者后面，判断两序列交界的两个字母是否不相邻，如果两种方法都不可行就说明无解。C题主要是二分的策略问题，数值小的作为左端点优，数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/Educational-Codeforces-Round-64-D、E题解/">
+
+
+
+
+
+  <title>Educational Codeforces Round 64 (Rated for Div. 2)题解(DE) | ↑↓CH2's Space</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">↑↓CH2's Space</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/Educational-Codeforces-Round-64-D、E题解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Educational Codeforces Round 64 (Rated for Div. 2)题解(DE)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T02:28:32+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/03/Educational-Codeforces-Round-64-D、E题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/03/Educational-Codeforces-Round-64-D、E题解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这次CF最终还是unrated了。虽然A题无限<font color="red">WA</font>point3（包括本菜在内）很容易让大家心态爆炸，但个人认为，B、C题做的好坏更为关键（这次的B和C都不是特别简单，需要仔细思考一下，否则很容易出错）。B题我采用的判断方法是奇偶字母分开，再把整个奇数序列放在偶数序列的前面或者后面，判断两序列交界的两个字母是否不相邻，如果两种方法都不可行就说明无解。C题主要是二分的策略问题，数值小的作为左端点优，数值大的作为右端点优，所以把序列一分为二，二分答案求分界点即可。（等等这篇好像是DE的题解来着？）  </p>
+<p>D题是一个比较典型的树形dp，但很遗憾本菜在比赛完之后才解决……首先读题要准确，节点对是相对有序的，所以全0序列和全1序列要算两次(因为x到y，y到x各算一次)，而先0后1序列只算一次。首先读图，随便找根节点建树，对于每一个节点，要记录它的子孙节点到它为止的全0、全1、先0后1、先1后0四种序列的数量(分别记为f00,f11,f01,f10)，由它的每一个儿子转移过来：如果儿子连向当前节点的边为0，那么更新f00和f10 <strong>（坑点：注意f00要加上儿子直接连接自己的、只有一条边的路径，f10除了由儿子的f10转移，还要由f11转移）</strong>；类似处理边为1的情况。然后就是儿子两两组合了（当然真的两两枚举肯定T，所以用当前儿子方案数×(总方案数减去当前儿子方案数)）：设以当前节点为路径中最高节点的路径集合为ans，那么ans要包括00+00，11+11，00+11，00+01，01+11这么多种情况，还要加上当前节点是路径端点、也即只用到一个儿子的情况。细节很 <strong><ruby>丰富<rt>糟糕</rt></ruby></strong> ，不知不觉，时间就在调试中消逝了~  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxn 201000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> maxm 500100</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;son;</span><br><span class="line">	<span class="keyword">int</span> fa,sz,v;</span><br><span class="line">	ll f00,f01,f10,f11,ans;</span><br><span class="line">&#125;te[maxn];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ljb</span>&#123;</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> firstEdge[maxn],used[maxn],m,n;</span><br><span class="line">	node dist[maxn];</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">edgeNode</span>&#123;</span></span><br><span class="line">		<span class="keyword">int</span> x,v,next;</span><br><span class="line">	&#125;edge[maxm*<span class="number">2</span>];</span><br><span class="line">	</span><br><span class="line">	ljb()&#123;</span><br><span class="line">		<span class="built_in">memset</span>(<span class="keyword">this</span>,<span class="number">0</span>,<span class="keyword">sizeof</span>(ljb));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">append</span><span class="params">(<span class="keyword">int</span> op,<span class="keyword">int</span> ed,<span class="keyword">int</span> va)</span></span>&#123;</span><br><span class="line">		m++;</span><br><span class="line">		edge[m].v=va;</span><br><span class="line">		edge[m].x=ed;</span><br><span class="line">		edge[m].next=firstEdge[op];</span><br><span class="line">		firstEdge[op]=m;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;graph;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bt</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp;x,<span class="keyword">const</span> <span class="keyword">int</span>&amp;fa)</span></span>&#123;</span><br><span class="line">	te[x].fa=fa;te[x].sz=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> q=graph.firstEdge[x];q;q=graph.edge[q].next)&#123;</span><br><span class="line">		<span class="keyword">if</span>(graph.edge[q].x!=fa)&#123;</span><br><span class="line">			te[x].son.push_back(graph.edge[q].x);</span><br><span class="line">			te[graph.edge[q].x].v=graph.edge[q].v;</span><br><span class="line">			bt(graph.edge[q].x,x);</span><br><span class="line">			te[x].sz+=te[graph.edge[q].x].sz;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span>&amp;i:te[x].son)&#123;</span><br><span class="line">		dfs(i);</span><br><span class="line">		<span class="keyword">if</span>(te[i].v)&#123;</span><br><span class="line">			te[x].f01+=te[i].f00+te[i].f01;</span><br><span class="line">			te[x].f11+=<span class="number">1</span>+te[i].f11;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			te[x].f10+=te[i].f10+te[i].f11;</span><br><span class="line">			te[x].f00+=<span class="number">1</span>+te[i].f00;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	te[x].ans=te[x].f00*<span class="number">2</span>+te[x].f11*<span class="number">2</span>+te[x].f00*te[x].f11+te[x].f01+te[x].f10;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span>&amp;i:te[x].son)&#123;</span><br><span class="line">		<span class="keyword">if</span>(te[i].v)&#123;</span><br><span class="line">			te[x].ans+=(te[i].f11+<span class="number">1</span>)*(te[x].f01-te[i].f01-te[i].f00);</span><br><span class="line">			te[x].ans+=(te[i].f11+<span class="number">1</span>)*(te[x].f11-te[i].f11<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			te[x].ans+=(te[i].f00+<span class="number">1</span>)*(te[x].f10-te[i].f10-te[i].f11);</span><br><span class="line">			te[x].ans+=(te[i].f00+<span class="number">1</span>)*(te[x].f00-te[i].f00<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> x,y,v;<span class="built_in">cin</span>&gt;&gt;x&gt;&gt;y&gt;&gt;v;</span><br><span class="line">		graph.append(x,y,v);</span><br><span class="line">		graph.append(y,x,v);</span><br><span class="line">	&#125;</span><br><span class="line">	bt(<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">	dfs(<span class="number">1</span>);</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		ans+=te[i].ans;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>E:蛇皮做法。老规矩，先用单调栈预处理每个点作为最大点的的覆盖范围；注意到输入数据是1~n的一个排列，所以预处理每一个数所在的位置。然后枚举每个点(不妨叫它x)，求出x作为最大点可以满足条件的区间数量，求法很暴力：选取左边区间和右边区间中较短的那个区间，对这个区间的每一个元素y，求出x-y，判断它的位置是否在x覆盖的另一个区间内。累计总数量得到答案。  </p>
+<p>这个算法显然是正确的，但神奇之处在于它的时间复杂度不是看上去的$Θ(n^2)$，实际上非常快。具体的证明比较难(本菜并不会)，但也许可以这么理解：<br>x为最大值n时，位置最差时为区间中点，此时需要枚举答案区间端点的数量最多，为n/2，相当于x把区间分成等长的两部分；然后x取n-1和n-2，位置最差时分别为各个部分的中点，此时各自分别需要枚举最多的n/4个端点，总共数量为n/2，相当于区间被分为4等分；再取x为n-3到n-6……这样相当于构造了树形结构，共有$log_2n$层，每层枚举数量为n/2，总共枚举数量为$(nlog_2n)$，对于题目给的数据范围可以接受。<br><strong>伪</strong>证毕。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> lft[<span class="number">301000</span>],rgt[<span class="number">301000</span>],loc[<span class="number">301000</span>],a[<span class="number">301000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">		loc[a[i]]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;st1,st2;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(st1.size()&amp;&amp;a[st1.top()]&lt;a[i])st1.pop();</span><br><span class="line">		<span class="keyword">if</span>(!st1.size())lft[i]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> lft[i]=st1.top()+<span class="number">1</span>;</span><br><span class="line">		st1.push(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i;--i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(st2.size()&amp;&amp;a[st2.top()]&lt;a[i])st2.pop();</span><br><span class="line">		<span class="keyword">if</span>(!st2.size())rgt[i]=n;</span><br><span class="line">		<span class="keyword">else</span> rgt[i]=st2.top()<span class="number">-1</span>;</span><br><span class="line">		st2.push(i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> l=lft[i],r=rgt[i];</span><br><span class="line">		<span class="keyword">if</span>(i-l&lt;=r-i)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=lft[i];j&lt;i;++j)&#123;</span><br><span class="line">				<span class="keyword">int</span> k=loc[a[i]-a[j]];</span><br><span class="line">				<span class="keyword">if</span>(k&lt;=r&amp;&amp;k&gt;i)++ans;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=rgt[i];j&gt;i;--j)&#123;</span><br><span class="line">				<span class="keyword">int</span> k=loc[a[i]-a[j]];</span><br><span class="line">				<span class="keyword">if</span>(k&gt;=l&amp;&amp;k&lt;i)++ans;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/树形dp/" rel="tag"># 树形dp</a>
+          
+            <a href="/tags/乱搞/" rel="tag"># 乱搞</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/30/澄清透明黑白色绝望/" rel="next" title="澄清透明黑白色绝望">
+                <i class="fa fa-chevron-left"></i> 澄清透明黑白色绝望
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="↑↓CH2">
+            
+              <p class="site-author-name" itemprop="name">↑↓CH2</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://isecloud.github.io/" title="ZH巨佬" target="_blank">ZH巨佬</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/FSAHFGSADHSAKNDAS" title="ACoder巨佬" target="_blank">ACoder巨佬</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://loliconautomaton.github.io/" title="WSY巨佬" target="_blank">WSY巨佬</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">↑↓CH2</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/05/03/Educational-Codeforces-Round-64-D、E题解/';
+          this.page.identifier = '2019/05/03/Educational-Codeforces-Round-64-D、E题解/';
+          this.page.title = 'Educational Codeforces Round 64 (Rated for Div. 2)题解(DE)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1009,164 +1009,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Global-Round-2-D、E题解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="↑↓CH2">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="↑↓CH2's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/26/Codeforces-Global-Round-2-D、E题解/" itemprop="url">Codeforces Global Round 2 D、E题解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T22:42:07+08:00">
-                2019-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/题解/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/04/26/Codeforces-Global-Round-2-D、E题解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/26/Codeforces-Global-Round-2-D、E题解/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>D:音乐题，如果学过吉他，可能比较容易理解题意：<br>吉他第i弦的第j品的音调为i弦的空弦音+j，给n(≤1e5)个弦的空弦音，有q(≤1e5)个询问，每次求所有弦第l品到第r品(0≤l≤r≤1e18)共能表示多少个音。<br>首先显然要把弦按空弦音升序排序。每次覆盖时，答案显然只和(r-l+1)有关。所以不妨把l统一设成0，对每根弦每次覆盖到的区间是[0,r-l]。这样就可以把每根弦的空弦音放在一根数轴上，对每个节点覆盖长为(r-l+1)的区间，答案就是被覆盖到的区间总长度。图为样例一的第二问，区间长度为(2-0+1)=3。<br><img src="/2019/04/26/Codeforces-Global-Round-2-D、E题解/线段.png" alt="线段"><br>我们可以发现，如果某个区间长度大于相邻两个点的距离，那么区间大于该距离的部分一定会被后一个区间“截掉”(如图中的1和3距离为2，小于当前区间长度3，所以以1开始的区间[1,3]的部分被后面的[3,5]覆盖；类似的，区间[3,5]又有一部分被[4,6]覆盖等)。只有长度小于相邻两个点距离的区间得到完整的保留。由于被截掉的区间相当于只剩下相邻两点距离的长度，因此所有部分被截掉的区间长度和就是所有这些相邻点距离的和。因此可以分别统计“部分被截断的区间总长度”和“全部保留的区间总长度”。只要找到所有长度小于询问区间长的相邻点距离并求和，再加上剩余未被截断的区间总长度就是答案。所以可以预处理相邻点的距离，并将它们从小到大排序，求出前缀和，就可以按每个询问的区间长二分查找，快速求出符合要求的区间长度和。未被截断的区间更好处理，求出总数量后乘区间长度即可。<br>(所以从代码上看就是各种排序+差分+前缀和……)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ull;</span><br><span class="line"></span><br><span class="line">ull s[<span class="number">202000</span>],dta[<span class="number">202000</span>],exadz[<span class="number">202000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;s[i];</span><br><span class="line">	&#125;</span><br><span class="line">	sort(s+<span class="number">1</span>,s+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		dta[i<span class="number">-1</span>]=s[i]-s[i<span class="number">-1</span>];<span class="comment">//先差分求相邻点距离</span></span><br><span class="line">	&#125;</span><br><span class="line">	sort(dta+<span class="number">1</span>,dta+n);<span class="comment">//排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		exadz[i]=exadz[i<span class="number">-1</span>]+dta[i];<span class="comment">//求前缀和</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> q;<span class="built_in">cin</span>&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=q;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		ull l,r;<span class="built_in">cin</span>&gt;&gt;l&gt;&gt;r;</span><br><span class="line">		ull d=r-l+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> t=lower_bound(dta+<span class="number">1</span>,dta+n,d)-dta;</span><br><span class="line">		ull ans=(n-t+<span class="number">1</span>)*d;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans+exadz[t<span class="number">-1</span>]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>另一种思路是离线处理，将询问按区间长从小到大排序，再利用单调性求出答案，同样要各种差分排序……在此不再赘述，可以参考zyp巨佬的代码。  </p>
-<hr>
-<p>E:贪心乱搞题。有a[i]个长度为$2^i$的火柴，问这些火柴总共能构成多少个三角形？  </p>
-<p>显然，<strong>每个三角形必须由两根长度为$2^i$和一根长度为$2^j$的火柴构成，其中j&lt;=i。</strong><br>这句话显而易见，但只要意识到这句话的正确性，答案也就呼之欲出了！<br>考虑哪些火柴是不能用来组成三角形的：对于每一种长度，如果它有奇数个火柴，且没有两根长度相等且大于等于它的长度的火柴来跟他匹配，那么这根火柴相当于作废。<br>所以按长度从大到小遍历各种火柴，先不急着拼出三角形，而是让火柴成对匹配，实时统计长度大于等于i的成对火柴数，如果某根火柴不能成对，即当前长度的火柴数量为奇数，那么需要消耗一组长度大于等于它的成对火柴来跟他形成三角形。如果当前没有成对火柴，却有单独的火柴，那么这一根单独的火柴就作废了。<br>这样扫一遍，可能还会剩下一堆成对火柴没有拼成三角形，但显然可以拆掉若干对长度较小的火柴来和长度较大的成对火柴拼成三角形。所以直接把没有作废的火柴数量整除3就得到答案了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">402000</span>],b[<span class="number">402000</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	ll w=<span class="number">0</span>,s=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">		s+=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> t=<span class="number">0</span>,bd=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)&#123;</span><br><span class="line">		t+=a[i]/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(a[i]%<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!t)++bd;</span><br><span class="line">			<span class="keyword">else</span> --t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;(s-bd)/<span class="number">3</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>以上。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1276,6 +1118,164 @@
 <p>状态出来了，转移也很明显：当前元素a[i]如果能放到升序队列，那么它必然比升序队列队尾元素大。如果a[i-1]放在升序队列，此时降序队列队尾就是f[i-1][1];如果a[i-1]放在降序队列，此时升序队列队尾是f[i-1][2]。每种情况在满足a[i]大于升序队列队尾的情况下，f[i][1]取两个降序队列队尾的最大值。<br>所以得到转移方程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][1]=max(f[i-1][1](a[i]&gt;a[i-1]),a[i-1](a[i]&gt;f[i-1][2]))</span><br></pre></td></tr></table></figure></p>
 <p>转移的时候顺便把”f[i][1]是由哪个队列的a[i-1]转移而来”记录下来，便于统计答案。<br>f[i][2]类似处理，请自行推导。  </p>
 <p>AC代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">400000</span>],f[<span class="number">400000</span>][<span class="number">3</span>],lst[<span class="number">400000</span>][<span class="number">3</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	f[<span class="number">1</span>][<span class="number">1</span>]=INF,f[<span class="number">1</span>][<span class="number">2</span>]=<span class="number">-1</span>;<span class="comment">//f[i][1]:a[i]放在单调增队列末尾，此时单调减队列的最大值;f[i][2]:a[i]放在单调减队列末尾，此时单调增队列的最小值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		f[i][<span class="number">1</span>]=<span class="number">-1</span>,f[i][<span class="number">2</span>]=INF;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=f[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;f[i<span class="number">-1</span>][<span class="number">2</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">2</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=f[i<span class="number">-1</span>][<span class="number">2</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;f[i<span class="number">-1</span>][<span class="number">1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> lw=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(f[n][<span class="number">1</span>]!=<span class="number">-1</span>)&#123;</span><br><span class="line">		lw=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(f[n][<span class="number">2</span>]!=INF)&#123;</span><br><span class="line">		lw=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!lw)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"NO\n"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"YES\n"</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;ans;ans.push(lw);</span><br><span class="line">	<span class="keyword">int</span> now=lw;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;<span class="number">1</span>;--i)&#123;</span><br><span class="line">		ans.push(lst[i][now]);</span><br><span class="line">		now=lst[i][now];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(!ans.empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans.top()<span class="number">-1</span>&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">		ans.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Global-Round-2-D、E题解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/26/Codeforces-Global-Round-2-D、E题解/" itemprop="url">Codeforces Global Round 2 D、E题解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T22:42:07+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/Codeforces-Global-Round-2-D、E题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/26/Codeforces-Global-Round-2-D、E题解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>D:音乐题，如果学过吉他，可能比较容易理解题意：<br>吉他第i弦的第j品的音调为i弦的空弦音+j，给n(≤1e5)个弦的空弦音，有q(≤1e5)个询问，每次求所有弦第l品到第r品(0≤l≤r≤1e18)共能表示多少个音。<br>首先显然要把弦按空弦音升序排序。每次覆盖时，答案显然只和(r-l+1)有关。所以不妨把l统一设成0，对每根弦每次覆盖到的区间是[0,r-l]。这样就可以把每根弦的空弦音放在一根数轴上，对每个节点覆盖长为(r-l+1)的区间，答案就是被覆盖到的区间总长度。图为样例一的第二问，区间长度为(2-0+1)=3。<br><img src="/2019/04/26/Codeforces-Global-Round-2-D、E题解/线段.png" alt="线段"><br>我们可以发现，如果某个区间长度大于相邻两个点的距离，那么区间大于该距离的部分一定会被后一个区间“截掉”(如图中的1和3距离为2，小于当前区间长度3，所以以1开始的区间[1,3]的部分被后面的[3,5]覆盖；类似的，区间[3,5]又有一部分被[4,6]覆盖等)。只有长度小于相邻两个点距离的区间得到完整的保留。由于被截掉的区间相当于只剩下相邻两点距离的长度，因此所有部分被截掉的区间长度和就是所有这些相邻点距离的和。因此可以分别统计“部分被截断的区间总长度”和“全部保留的区间总长度”。只要找到所有长度小于询问区间长的相邻点距离并求和，再加上剩余未被截断的区间总长度就是答案。所以可以预处理相邻点的距离，并将它们从小到大排序，求出前缀和，就可以按每个询问的区间长二分查找，快速求出符合要求的区间长度和。未被截断的区间更好处理，求出总数量后乘区间长度即可。<br>(所以从代码上看就是各种排序+差分+前缀和……)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ull;</span><br><span class="line"></span><br><span class="line">ull s[<span class="number">202000</span>],dta[<span class="number">202000</span>],exadz[<span class="number">202000</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;s[i];</span><br><span class="line">	&#125;</span><br><span class="line">	sort(s+<span class="number">1</span>,s+n+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		dta[i<span class="number">-1</span>]=s[i]-s[i<span class="number">-1</span>];<span class="comment">//先差分求相邻点距离</span></span><br><span class="line">	&#125;</span><br><span class="line">	sort(dta+<span class="number">1</span>,dta+n);<span class="comment">//排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		exadz[i]=exadz[i<span class="number">-1</span>]+dta[i];<span class="comment">//求前缀和</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> q;<span class="built_in">cin</span>&gt;&gt;q;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=q;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		ull l,r;<span class="built_in">cin</span>&gt;&gt;l&gt;&gt;r;</span><br><span class="line">		ull d=r-l+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> t=lower_bound(dta+<span class="number">1</span>,dta+n,d)-dta;</span><br><span class="line">		ull ans=(n-t+<span class="number">1</span>)*d;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans+exadz[t<span class="number">-1</span>]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另一种思路是离线处理，将询问按区间长从小到大排序，再利用单调性求出答案，同样要各种差分排序……在此不再赘述，可以参考zyp巨佬的代码。  </p>
+<hr>
+<p>E:贪心乱搞题。有a[i]个长度为$2^i$的火柴，问这些火柴总共能构成多少个三角形？  </p>
+<p>显然，<strong>每个三角形必须由两根长度为$2^i$和一根长度为$2^j$的火柴构成，其中j&lt;=i。</strong><br>这句话显而易见，但只要意识到这句话的正确性，答案也就呼之欲出了！<br>考虑哪些火柴是不能用来组成三角形的：对于每一种长度，如果它有奇数个火柴，且没有两根长度相等且大于等于它的长度的火柴来跟他匹配，那么这根火柴相当于作废。<br>所以按长度从大到小遍历各种火柴，先不急着拼出三角形，而是让火柴成对匹配，实时统计长度大于等于i的成对火柴数，如果某根火柴不能成对，即当前长度的火柴数量为奇数，那么需要消耗一组长度大于等于它的成对火柴来跟他形成三角形。如果当前没有成对火柴，却有单独的火柴，那么这一根单独的火柴就作废了。<br>这样扫一遍，可能还会剩下一堆成对火柴没有拼成三角形，但显然可以拆掉若干对长度较小的火柴来和长度较大的成对火柴拼成三角形。所以直接把没有作废的火柴数量整除3就得到答案了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">402000</span>],b[<span class="number">402000</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	ll w=<span class="number">0</span>,s=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">		s+=a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> t=<span class="number">0</span>,bd=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)&#123;</span><br><span class="line">		t+=a[i]/<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span>(a[i]%<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!t)++bd;</span><br><span class="line">			<span class="keyword">else</span> --t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;(s-bd)/<span class="number">3</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>以上。</p>
 
           

@@ -262,6 +262,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/CSP认证划水记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/21/CSP认证划水记/" itemprop="url">CSP认证划水记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T22:51:10+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/21/CSP认证划水记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/21/CSP认证划水记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="膨胀了膨胀了……"><a href="#膨胀了膨胀了……" class="headerlink" title="膨胀了膨胀了……"></a>膨胀了膨胀了……</h1><p><img src="/2019/03/21/CSP认证划水记/天胡.png" alt="天胡"></p>
+<p>先讲一下赛制问题。CSP认证用的是NOIP赛制，也就是说在考试时不能即时看到自己的分数，这导致一大批童鞋某些题考场上春风得意，结果莫名爆0，还不知道是怎么死的；甚至还有编译器版本问题，好多悲惨的童鞋用了gets读字符串，然后选择C++11作为提交语言，于是<del>华丽地</del><font color="yellow">CE</font>了……<br><del>getline大法吼呀</del>(<strong>get一家退环境了泥萌真的不造吗==</strong>)<br>不过这样的赛制倒有一个好处：有部分分的存在。很多题目，甚至不用想到最优算法，就可以骗到相当可观的分。比如这次的E题，60分骗分算法大部分人都会做，而据某群一位超NB的大佬说，E题满分是不可做的= = 于是这次比赛，最高分就是460。<br>(<strong>什么？不会60分算法？那floyd总会吧？N遍dijkstra会的吧？OK，30分到手==</strong>)<br>然而本人还是炸了E题的一个点，不明不白的==(彩笔)</p>
+<p>本人由于个人经历，其实还算比较适应这一赛制。和ACM相比，打这种比赛，要特别注意一些不同的事情：  </p>
+<ol>
+<li>千万保证不<font color="yellow">CE</font>！一定要注意本地和评测机使用的编译器可能不一样，在Dev-C++里的编译命令中可以选择语言规范标准，最好和评测机保持一致，<strong>不要乱用危险的用法！</strong> 另外，有的时候本地测试里有一些必要的头文件没有被include，但编译器悄悄自己include并放你过了，你自己不知道；<strong>但评测机并不会这么宽松，直接<font color="yellow">CE</font>送上天！一定要千万注意！强烈推荐万能头文件”bits/stdc++.h”，不劳永逸！</strong>   </li>
+<li><p>千万保证不<font color="purple">MLE</font>！在本地测试时打开任务管理器或者资源监视器，监测内存使用空间变化有没有超过题目限制，如果超出，<strong>宁可牺牲一部分分数也要开小数组！</strong> 另外，还要考虑到函数内部申请的空间以及函数递归花费的空间开销。</p>
+<h3 id="程序千万条，能跑第一条。提交不规范，爆0两行泪。"><a href="#程序千万条，能跑第一条。提交不规范，爆0两行泪。" class="headerlink" title="程序千万条，能跑第一条。提交不规范，爆0两行泪。"></a><strong>程序千万条，能跑第一条。提交不规范，爆0两行泪。</strong></h3><p> 以上这两个注意点，如果处理的不好，就会面临爆0的风险，连部分分都拿不到。<strong>爆0是一定要避免的！几乎所有题，都至少可以用最原始、暴力的做法”骗”到一些分数；如果这些分都拿不到，实在非常伤。</strong> </p>
+</li>
+<li><p>在把<strong>能拿到的分都拿到之前</strong>，不要为思考某道题的满分算法花费太多时间，<strong>这和ACM赛制有很大不同。</strong> 很多时候，AC一道题花费的时间，够骗起码两题的60分算法了，反而得不偿失。 还是那句话：<strong>骗分</strong>。  </p>
+<h3 id="由此可见，在这种赛制下，做题的规划全都是按照部分分进行的。高分并不一定意味着能AC多少题，但一定能“骗”到尽量多的分！"><a href="#由此可见，在这种赛制下，做题的规划全都是按照部分分进行的。高分并不一定意味着能AC多少题，但一定能“骗”到尽量多的分！" class="headerlink" title="由此可见，在这种赛制下，做题的规划全都是按照部分分进行的。高分并不一定意味着能AC多少题，但一定能“骗”到尽量多的分！"></a><strong>由此可见，在这种赛制下，做题的规划全都是按照部分分进行的。高分并不一定意味着能<font color="green">AC</font>多少题，但一定能“骗”到尽量多的分！</strong></h3></li>
+<li><p>本地测试时充分考虑算法可能存在的漏洞，多构造几种数据，特别是比较特殊的数据（比如n=1，图的自环等等）。没有即时评测，谁也不知道最后会发生什么。比如本次比赛，我的D题写完后虽然通过了样例，但总感觉可能不对劲，后来构造了多组数据，果然找出了bug。所以，多测试，多对拍，永远不亏。（对拍是指把暴力骗分程序和试图写满分的程序用构造的数据对照测试，从而检测试图写满分的程序的正确性）</p>
+</li>
+<li><p>经验表明，难读懂的题其实往往比较好做，因为难点在阅读理解上(？？？)；而难题多半是题干一目了然的那种。比如这次的C和E。</p>
+</li>
+</ol>
+<hr>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>A题……裸送？其实比起直接cout，个人认为还是分类讨论一下比较好。（贴吧上还真看到有老哥死在这道题上，<del>都是赛制的锅</del>）  </p>
+<p>B题就比较快乐了，因为数据结构课刚刚讲过中缀表达式的求解，那个还是带括号的= = 连x和*都有考场老师的提醒，应该问题不大= =  </p>
+<p>C题，题面很不友好，但根据原则4，这样的题实际上都比较水，果不其然= =（然而本渣还是炸了10分，菜逼）<br>首先所谓的RAID-5卷，讲了半天，就是给n+1块磁盘，来保存n块磁盘容量的数据，这样可以通过异或运算，<strong>可以在只坏掉一块硬盘的情况下恢复该硬盘的数据；但坏两块以上就不能恢复了。不过即使如此，有些数据没有存在坏掉的硬盘上，还是能找回来的。</strong><br>所以第一步：统计磁盘数量，如果只坏了一块硬盘，那就用别的硬盘异或运算修好，字符串和数字互相转换而已，应该没有难度；两块以上硬盘坏掉就别管了。<br>然后就是找数据块了。要找块先找条带，条带编号公式给了，在条带中找块也很简单；关键是确定条带的位置。根据题干描述+观察图片样例，在每(n*n)个空间中，实际保存数据的条带有(n*(n-1))个，备份用的条带按矩阵的副对角线排列。如果把这(n*n)个条带空间称为一“区”，那么条带的排列就是按照这样的若干个“区”循环进行的：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>   <span class="number">1</span>   <span class="number">2</span>   P  </span><br><span class="line"><span class="number">4</span>   <span class="number">5</span>   P   <span class="number">3</span>  </span><br><span class="line"><span class="number">8</span>   P   <span class="number">6</span>   <span class="number">7</span>  </span><br><span class="line">P   <span class="number">9</span>   <span class="number">10</span>  <span class="number">11</span></span><br></pre></td></tr></table></figure></p>
+<p>那就很简单了：首先根据条带的编号求出这个条带在哪个“区”，以及在这个区内的相对编号（即如上图的0，1,2，……，11，取余运算即可），那么怎么根据先对编号求出具体的坐标呢？在n很大的情况下不适合暴力枚举。观察上图，发现如果先把P忽略掉，把下面的数字三角形合并上来，得到的就是n*(n-1)的排列完成的矩形矩阵；然后就很简单了，先求出当前条带在当前区的坐标，根据坐标判断，如果在右下角的三角形中，行下标就要加一。条带的位置得到了，那对应的块的位置也就出来了，问题便迎刃而解。</p>
+<p>当然，如果时间不够，或者题目看不下去，暂时跳过，先做D和E也是可以的。<strong>分奴做法：骗分优先。</strong></p>
+<p>D题……首先你不可以用gets……<br>dfs乱搞，随便找个没跑完的线程，因为所有的线程能跑完的必要条件是任意一个线程能跑完；然后找它目前对应请求的线程，如果不匹配，那从这个线程继续dfs下去……如果一个线程还在等待它对应的进程，但它又要被别的线程调用了，而且<strong>全程没有成功被匹配</strong>(坑点，险些凉凉)，那说明这个线程彻底凉了，不用继续搜了。当所有线程都被放空，那说明问题解决。但这种dfs有可能写炸，如果妥协起见，还是n^2爆搜吧，至少60分是稳的。如果写了100分算法，结果写错了爆0，实在得不偿失= =</p>
+<p>E题60分做法：我们注意到这些部分分的数据中，轨道发动机的数据范围都比较小。所以从轨道发动机开始反向dijkstra，对每个节点统计与轨道发动机之间的距离，保留最小的k个即可。<br>100分做法：别问本菜鸡。真的不会= =</p>
+<p>以上。 </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/NWPU春季赛，题解与反思/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -488,7 +663,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

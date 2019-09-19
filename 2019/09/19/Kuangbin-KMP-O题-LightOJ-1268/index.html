@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="题解,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="【题面描述】求由字典集T（仅包含小写字母）生成的长度为m，且不包含子串S（|S|≤50）的字符串总数量，对$2^{32}$取模。m不超过${10}^9$。 神烦的dp套KMP= =看数据规模容易以为是CTA算法题(Contribute To the Answer)，但居然是矩阵快速幂优化dp= =感觉没见过的话很不可做，但据说已经是经典老题了，还有AC自动机版本…… 取模就是两眼一闭，自然溢出。">
+<meta name="keywords" content="题解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kuangbin_KMP_O题(LightOJ-1268)">
+<meta property="og:url" content="http://yoursite.com/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/index.html">
+<meta property="og:site_name" content="↑↓CH2&#39;s Space">
+<meta property="og:description" content="【题面描述】求由字典集T（仅包含小写字母）生成的长度为m，且不包含子串S（|S|≤50）的字符串总数量，对$2^{32}$取模。m不超过${10}^9$。 神烦的dp套KMP= =看数据规模容易以为是CTA算法题(Contribute To the Answer)，但居然是矩阵快速幂优化dp= =感觉没见过的话很不可做，但据说已经是经典老题了，还有AC自动机版本…… 取模就是两眼一闭，自然溢出。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-19T13:02:58.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kuangbin_KMP_O题(LightOJ-1268)">
+<meta name="twitter:description" content="【题面描述】求由字典集T（仅包含小写字母）生成的长度为m，且不包含子串S（|S|≤50）的字符串总数量，对$2^{32}$取模。m不超过${10}^9$。 神烦的dp套KMP= =看数据规模容易以为是CTA算法题(Contribute To the Answer)，但居然是矩阵快速幂优化dp= =感觉没见过的话很不可做，但据说已经是经典老题了，还有AC自动机版本…… 取模就是两眼一闭，自然溢出。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/">
+
+
+
+
+
+  <title>Kuangbin_KMP_O题(LightOJ-1268) | ↑↓CH2's Space</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">↑↓CH2's Space</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kuangbin_KMP_O题(LightOJ-1268)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-19T19:50:00+08:00">
+                2019-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>【题面描述】<br>求由字典集T（仅包含小写字母）生成的长度为m，且不包含子串S（|S|≤50）的字符串总数量，对$2^{32}$取模。m不超过${10}^9$。</p>
+<p>神烦的dp套KMP= =看数据规模容易以为是CTA算法题(Contribute To the Answer)，但居然是矩阵快速幂优化dp= =感觉没见过的话很不可做，但据说已经是经典老题了，还有AC自动机版本……</p>
+<p>取模就是两眼一闭，自然溢出。</p>
+<p>首先得迅速解决n比较小时的问题，否则就会想偏。<br>f[i][j]表示第i位文本串匹配到第j位模式串的合法方案数，其中规定j尽可能大。初值为f[0][0]=1，转移时对每个模式串的位置j枚举下一个字母k，遍历j的next祖先，找到能成功匹配到k的最大位置，这就是应当转移到的目标；如果匹配完成，那么不计入答案。显然这一步与i无关，所以可以预处理mtx数组，其中mtx[j][k]表示第j位模式串后接上k应当转移到的位置，对每个j和k暴力跑next即可。这样在跑dp时，对每一对(j,k)，可以$O(1)$地找到要转移到的位置，将方案数累加即可（刷表法）。答案就是$\displaystyle\sum_{i=0}^{|S|-1}f[m][i]$。dp时间复杂度为$O(m|S||T|)$，预处理时间复杂度为$O(|S|^2|T|)$。其实可以通过进一步预处理，使预处理时不用枚举k，复杂度下降为$O(|S|^2)$，但由于时间复杂度瓶颈不在这里，所以意义不大= =</p>
+<p>转移方程伪代码：<br>$for\space k&lt;|T|:f[i][mtx[j][k]]+=f[i-1][j]$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *powered by caibiCH2</span></span><br><span class="line"><span class="comment"> *create at 2019-09-18 23:09:46</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">elif</span> <span class="meta-keyword">else</span> <span class="meta-keyword">if</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max(x,y) ((x)&gt;(y)?(x):(y))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(x,y) (xiangdangyu(y)?(x):(y))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3fxiangdangyu</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;getNext(<span class="keyword">const</span> <span class="built_in">string</span>&amp;s)&#123;</span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">0</span>,k=<span class="number">-1</span>,l=s.length();</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;next(l+<span class="number">1</span>);</span><br><span class="line">	next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span>(j&lt;l)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k==<span class="number">-1</span>||s[j]==s[k])</span><br><span class="line">			next[++j]=++k;</span><br><span class="line">		<span class="keyword">else</span> k=next[k];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//	for(auto i:next)cout&lt;&lt;i&lt;&lt;' ';</span></span><br><span class="line">	<span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> f[<span class="number">101000</span>][<span class="number">60</span>];</span><br><span class="line"><span class="keyword">unsigned</span> mtx[<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> T;<span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> o=<span class="number">1</span>;o&lt;=T;o+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> m;<span class="built_in">cin</span>&gt;&gt;m;</span><br><span class="line">		<span class="built_in">string</span> s1,s2;<span class="built_in">cin</span>&gt;&gt;s1&gt;&gt;s2;<span class="keyword">int</span> n=s2.length();</span><br><span class="line">		<span class="keyword">auto</span> next=getNext(s2);</span><br><span class="line">		<span class="built_in">memset</span>(mtx,<span class="number">0</span>,<span class="keyword">sizeof</span>(mtx));</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;s1.length();k+=<span class="number">1</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> t=j;;t=next[t])&#123;</span><br><span class="line">					<span class="keyword">if</span>(t==<span class="number">-1</span>||s1[k]==s2[t])&#123;mtx[j][k]=t+<span class="number">1</span>;<span class="keyword">break</span>;&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		f[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i+=<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">				f[i][j]=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;s1.length();k+=<span class="number">1</span>)&#123;</span><br><span class="line">					f[i][mtx[j][k]]+=f[i<span class="number">-1</span>][j];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ll ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">			ans+=f[m][i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后可以发现，f[i][j]只由f[i-1][j]转移而来。所以可以用填表法表示转移方程：</p>
+<!-- 转换成填表法的转移方程：   -->
+<p>$f[i][j]=\displaystyle\sum<em>{k=0}^{|T-1|}\sum</em>{p=0}^{|S-1|}f[i-1][p]\cdot[mtx[p][k]==j]$</p>
+<p>莫名其妙多了一维？但可以发现，对于每对(p,j)，我们只关心有多少个k，使得mtx[p][k]==j，也就是说可以再次预处理m0[p][j]表示满足条件的k的数量。<br>于是修改转移方程（顺便重新命名了一些字母）：<br>$f[i][j]=\displaystyle\sum<em>{k=0}^{|S|-1}f[i-1][k]\cdot m0[k][j]$<br>初值还是f[0][0]=1。<br>我们发现了什么？如果把f[i]写成行向量，那么这就是矩阵乘法的形式！那么就变成矩阵快速幂的板子了。<br>但本人习惯写方阵×列向量的形式，所以dp方程（强行）改为：<br>$f[i][j]=\displaystyle\sum</em>{k=0}^{|S|-1}m0[j][k]\cdot f[i-1][k]$<br>由于初值只有f[0][0]=1，所以乘完后答案就是第0列的和，不必再进行一次矩阵乘法了。</p>
+<p>另外，两步预处理可以合成一步，还是省略k的信息，比较容易就不再赘述了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *powered by caibiCH2</span></span><br><span class="line"><span class="comment"> *create at 2019-09-18 23:09:46</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">elif</span> <span class="meta-keyword">else</span> <span class="meta-keyword">if</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max(x,y) ((x)&gt;(y)?(x):(y))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> min(x,y) ((x)&lt;(y)?(x):(y))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;getNext(<span class="keyword">const</span> <span class="built_in">string</span>&amp;s)&#123;</span><br><span class="line">	<span class="keyword">int</span> j=<span class="number">0</span>,k=<span class="number">-1</span>,l=s.length();</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;next(l+<span class="number">1</span>);</span><br><span class="line">	next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span>(j&lt;l)&#123;</span><br><span class="line">		<span class="keyword">if</span>(k==<span class="number">-1</span>||s[j]==s[k])</span><br><span class="line">			next[++j]=++k;</span><br><span class="line">		<span class="keyword">else</span> k=next[k];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//	for(auto i:next)cout&lt;&lt;i&lt;&lt;' ';</span></span><br><span class="line">	<span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> mtx[<span class="number">60</span>][<span class="number">60</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">matrix</span>&#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> data[<span class="number">60</span>][<span class="number">60</span>],n;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> u)</span></span>&#123;</span><br><span class="line">		n=u;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">				data[i][j]=<span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">friend</span> matrix <span class="keyword">operator</span>*(<span class="keyword">const</span> matrix&amp;a,<span class="keyword">const</span> matrix&amp;b)&#123;</span><br><span class="line">		matrix c;c.init(a.n);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;c.n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;c.n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;c.n;k+=<span class="number">1</span>)&#123;</span><br><span class="line">					c.data[i][j]+=a.data[i][k]*b.data[k][j];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;m0;</span><br><span class="line"><span class="function">matrix <span class="title">qpow</span><span class="params">(matrix x,<span class="keyword">long</span> <span class="keyword">long</span> y)</span></span>&#123;</span><br><span class="line">	matrix t;</span><br><span class="line">	t.init(x.n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;x.n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		t.data[i][i]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(y)&#123;</span><br><span class="line">		<span class="keyword">if</span>(y&amp;<span class="number">1</span>)&#123;t=t*x;&#125;</span><br><span class="line">		x=x*x;</span><br><span class="line">		y&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> T;<span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> o=<span class="number">1</span>;o&lt;=T;o+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> m;<span class="built_in">cin</span>&gt;&gt;m;</span><br><span class="line">		<span class="built_in">string</span> s1,s2;<span class="built_in">cin</span>&gt;&gt;s1&gt;&gt;s2;<span class="keyword">int</span> n=s2.length();</span><br><span class="line">		<span class="keyword">auto</span> next=getNext(s2);</span><br><span class="line">		<span class="built_in">memset</span>(mtx,<span class="number">0</span>,<span class="keyword">sizeof</span>(mtx));m0.init(n);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j+=<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;s1.length();k+=<span class="number">1</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> t=j;;t=next[t])&#123;</span><br><span class="line">					<span class="keyword">if</span>(t==<span class="number">-1</span>||s1[k]==s2[t])&#123;++m0.data[t+<span class="number">1</span>][j];<span class="keyword">break</span>;&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		m0=qpow(m0,m);</span><br><span class="line">		<span class="keyword">unsigned</span> ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">			ans+=m0.data[i][<span class="number">0</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"Case "</span>&lt;&lt;o&lt;&lt;<span class="string">": "</span>&lt;&lt;ans&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/题解/" rel="tag"># 题解</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/09/暑假社会实践报告/" rel="next" title="暑假社会实践报告">
+                <i class="fa fa-chevron-left"></i> 暑假社会实践报告
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="↑↓CH2">
+            
+              <p class="site-author-name" itemprop="name">↑↓CH2</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://isecloud.github.io/" title="ZH巨佬" target="_blank">ZH巨佬</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/FSAHFGSADHSAKNDAS" title="ACoder巨佬" target="_blank">ACoder巨佬</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://loliconautomaton.github.io/" title="WSY巨佬" target="_blank">WSY巨佬</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://back007.github.io/" title="刘总主席" target="_blank">刘总主席</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://zhaoyiping.xyz" title="赵队NB" target="_blank">赵队NB</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">↑↓CH2</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/';
+          this.page.identifier = '2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/';
+          this.page.title = 'Kuangbin_KMP_O题(LightOJ-1268)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

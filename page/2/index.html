@@ -262,6 +262,321 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Round-550-Div-3-G题题解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/26/Codeforces-Round-550-Div-3-G题题解/" itemprop="url">Codeforces Round #550 (Div.3) G题题解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T22:42:07+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/Codeforces-Round-550-Div-3-G题题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/26/Codeforces-Round-550-Div-3-G题题解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="人生第一个独立完成的CF压轴题？"><a href="#人生第一个独立完成的CF压轴题？" class="headerlink" title="人生第一个独立完成的CF压轴题？"></a>人生第一个独立完成的CF压轴题？</h2><p>(然而是Div3+赛后才做出来，彩笔)</p>
+<p>首先是dp思路(一看就是dp，不多解释)：考虑到每个点要么被放到升序队列，要么放到降序队列，那么只要让当前升序队列最后一个数尽量小，降序队列最后一个数尽量大就可以了。 </p>
+<p>f[i][1]表示把a[i]放到升序队列，此时降序队列队尾最大值(升序队列队尾最小值就是a[i]，不用记录)；f[i][2]表示把a[i]放到降序队列，此时升序队列队尾最小值。(同理降序队列队尾最小值就是a[i])</p>
+<p>状态出来了，转移也很明显：当前元素a[i]如果能放到升序队列，那么它必然比升序队列队尾元素大。如果a[i-1]放在升序队列，此时降序队列队尾就是f[i-1][1];如果a[i-1]放在降序队列，此时升序队列队尾是f[i-1][2]。每种情况在满足a[i]大于升序队列队尾的情况下，f[i][1]取两个降序队列队尾的最大值。<br>所以得到转移方程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f[i][1]=max(f[i-1][1](a[i]&gt;a[i-1]),a[i-1](a[i]&gt;f[i-1][2]))</span><br></pre></td></tr></table></figure></p>
+<p>转移的时候顺便把”f[i][1]是由哪个队列的a[i-1]转移而来”记录下来，便于统计答案。<br>f[i][2]类似处理，请自行推导。  </p>
+<p>AC代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">400000</span>],f[<span class="number">400000</span>][<span class="number">3</span>],lst[<span class="number">400000</span>][<span class="number">3</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	f[<span class="number">1</span>][<span class="number">1</span>]=INF,f[<span class="number">1</span>][<span class="number">2</span>]=<span class="number">-1</span>;<span class="comment">//f[i][1]:a[i]放在单调增队列末尾，此时单调减队列的最大值;f[i][2]:a[i]放在单调减队列末尾，此时单调增队列的最小值</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		f[i][<span class="number">1</span>]=<span class="number">-1</span>,f[i][<span class="number">2</span>]=INF;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=f[i<span class="number">-1</span>][<span class="number">1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&gt;f[i<span class="number">-1</span>][<span class="number">2</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&gt;f[i][<span class="number">1</span>])&#123;</span><br><span class="line">				f[i][<span class="number">1</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">1</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(f[i<span class="number">-1</span>][<span class="number">2</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=f[i<span class="number">-1</span>][<span class="number">2</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;f[i<span class="number">-1</span>][<span class="number">1</span>])&#123;</span><br><span class="line">			<span class="keyword">if</span>(a[i<span class="number">-1</span>]&lt;f[i][<span class="number">2</span>])&#123;</span><br><span class="line">				f[i][<span class="number">2</span>]=a[i<span class="number">-1</span>];</span><br><span class="line">				lst[i][<span class="number">2</span>]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> lw=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(f[n][<span class="number">1</span>]!=<span class="number">-1</span>)&#123;</span><br><span class="line">		lw=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(f[n][<span class="number">2</span>]!=INF)&#123;</span><br><span class="line">		lw=<span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!lw)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"NO\n"</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"YES\n"</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;ans;ans.push(lw);</span><br><span class="line">	<span class="keyword">int</span> now=lw;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;<span class="number">1</span>;--i)&#123;</span><br><span class="line">		ans.push(lst[i][now]);</span><br><span class="line">		now=lst[i][now];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(!ans.empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;ans.top()<span class="number">-1</span>&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">		ans.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/Codeforces-Round-551-Div-2-D、E题解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="↑↓CH2">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="↑↓CH2's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/26/Codeforces-Round-551-Div-2-D、E题解/" itemprop="url">Codeforces Round #551 (Div. 2) D、E题解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-26T22:42:07+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/题解/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/26/Codeforces-Round-551-Div-2-D、E题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/04/26/Codeforces-Round-551-Div-2-D、E题解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>D:一棵树有n(2≤n≤3e5)个节点，其中有k个叶子节点，叶子节点的值是1~k的任意一个排列(自己定)，非叶子节点的值是它所有儿子的最大值或者最小值。求根节点(1号)可以拥有的最大值。<br>自底向上树形dp。如果一个节点为max节点，那么不妨只保留一个儿子作为结果的最大值，而令其他儿子的子孙叶子节点尽可能小。这相当于删去了其他儿子，并把这个节点的度变为1。显然，度为1的max节点和min节点是等价的。所以经过若干次操作，这棵树只剩下min节点，所以答案就是剩下的叶子节点的最小值，即(k-w+1)，其中w为剩下的叶子节点数。(1,2,…,k-w在max节点中被”比下去”了，也就相当于被删除了)所以，为了让w尽量大，我们总是希望删除尽量多的叶子节点。因此，统计每个节点的子孙叶子节点数量，max节点只保留拥有最少的子孙叶子节点的儿子，同时还要累记被删掉的节点数量。  </p>
+<script type="math/tex; mode=display">f[i]=\begin{cases}
+sum(f[j:st[i].son]) &i为min点 \\
+min(f[j:st[i].son]) & i为max点
+\end{cases}</script><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> fa,sh;<span class="comment">//,nleaf;</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;son;</span><br><span class="line">&#125;st[<span class="number">400000</span>];</span><br><span class="line"><span class="keyword">int</span> k=<span class="number">1</span>,a[<span class="number">400000</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp;now)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(st[now].son.size())&#123;</span><br><span class="line">		<span class="keyword">int</span> minm=INT_MAX,sum=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">auto</span>&amp;x:st[now].son)&#123;</span><br><span class="line">			dfs(x);</span><br><span class="line">			minm=min(minm,st[x].sh);</span><br><span class="line">			sum+=st[x].sh;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[now])&#123;</span><br><span class="line">			st[now].sh=minm;</span><br><span class="line">			k+=sum-minm;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> st[now].sh=sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		st[now].sh=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">int</span> f;<span class="built_in">cin</span>&gt;&gt;f;</span><br><span class="line">		st[i].fa=f;</span><br><span class="line">		st[f].son.push_back(i);</span><br><span class="line">	&#125;</span><br><span class="line">	dfs(<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;k&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>E题难受了……本来可以做出来，结果前面太磨蹭，然后还搞错了结束时间，结果莫名其妙提前放弃了……最后5分钟还在纳闷怎么还没结束……<br>不过赛后还是AC了(彩笔人生第一道交互题)。思路很简单：如果某个矩形包含了蛇的头或者蛇的尾中的一个，那么回答是奇数；否则是偶数。由于有2019次询问机会，而n不超过1000，因此可以询问n个1×n的矩形和n个n×1的矩形，找奇数的回答，就是头或者尾所在的坐标。如果头和尾既不在同一行也不在同一列，那么头和尾的坐标也都确定下来了，对4种可能的点分别询问一下即可。如果头和尾在同一行，那么通过之前的询问只能知道头和尾分别在哪一列，因此还要用二分查找确定在它们在哪一行。头和尾在同一列同理。<br>本题虽然思路简单，但实现比较繁琐，因此AC代码不贴了。<br>以上。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/2018焦作站E题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -823,7 +1138,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

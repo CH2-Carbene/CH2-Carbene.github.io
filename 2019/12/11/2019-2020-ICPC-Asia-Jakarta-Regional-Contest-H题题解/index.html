@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="反思,">
+  <meta name="keywords" content="贪心,">
 
 
 
@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="今年暑假，我参加了西北工业大学的大学生程序设计创新实践基地（ACM基地）的培训。我认为，但凡参加这个培训的同学们，都或多或少怀揣了摘金夺银的梦想。三伏盛夏，谁愿意顶着酷暑，每日早起赶到机房打卡，听课，刷题，敲代码，调试，敲代码，调试，调试呢？既然大家愿意牺牲大量玩的时间（培训时长为一个暑假，中间只有两周的休息时间），必然对收获有着一份向往。本人也是如此，打codeforces到24:35几乎成了常">
-<meta name="keywords" content="反思">
+<meta name="description" content="题目描述：给n个矩形二维容器(xi×yi)，求面积最大的矩形块A×B，使得两个这样的矩形块能塞进容器里。   塞法有两种：塞在同一个容器；塞在两个不同的容器。前一种情况很水，后一种也不难。枚举矩形块的较小边A，这个较小边也必然是某个容器的较小边。所以只要枚举容器的较小边就行了，这样确定第一个容器；然后在第一条边大于A的容器中，找第二条边的最大值。该值与第一个容器的较大边的较小值，就是矩形块的较大边">
+<meta name="keywords" content="贪心">
 <meta property="og:type" content="article">
-<meta property="og:title" content="暑假社会实践报告">
-<meta property="og:url" content="http://yoursite.com/2019/09/09/暑假社会实践报告/index.html">
+<meta property="og:title" content="2019-2020 ICPC, Asia Jakarta Regional Contest H题题解">
+<meta property="og:url" content="http://yoursite.com/2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/index.html">
 <meta property="og:site_name" content="↑↓CH2&#39;s Space">
-<meta property="og:description" content="今年暑假，我参加了西北工业大学的大学生程序设计创新实践基地（ACM基地）的培训。我认为，但凡参加这个培训的同学们，都或多或少怀揣了摘金夺银的梦想。三伏盛夏，谁愿意顶着酷暑，每日早起赶到机房打卡，听课，刷题，敲代码，调试，敲代码，调试，调试呢？既然大家愿意牺牲大量玩的时间（培训时长为一个暑假，中间只有两周的休息时间），必然对收获有着一份向往。本人也是如此，打codeforces到24:35几乎成了常">
+<meta property="og:description" content="题目描述：给n个矩形二维容器(xi×yi)，求面积最大的矩形块A×B，使得两个这样的矩形块能塞进容器里。   塞法有两种：塞在同一个容器；塞在两个不同的容器。前一种情况很水，后一种也不难。枚举矩形块的较小边A，这个较小边也必然是某个容器的较小边。所以只要枚举容器的较小边就行了，这样确定第一个容器；然后在第一条边大于A的容器中，找第二条边的最大值。该值与第一个容器的较大边的较小值，就是矩形块的较大边">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/09/09/暑假社会实践报告/PPT.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/09/暑假社会实践报告/codeforces.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/09/暑假社会实践报告/个人赛rank.png">
-<meta property="og:updated_time" content="2019-09-09T08:23:24.277Z">
+<meta property="og:updated_time" content="2019-12-11T10:13:57.496Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="暑假社会实践报告">
-<meta name="twitter:description" content="今年暑假，我参加了西北工业大学的大学生程序设计创新实践基地（ACM基地）的培训。我认为，但凡参加这个培训的同学们，都或多或少怀揣了摘金夺银的梦想。三伏盛夏，谁愿意顶着酷暑，每日早起赶到机房打卡，听课，刷题，敲代码，调试，敲代码，调试，调试呢？既然大家愿意牺牲大量玩的时间（培训时长为一个暑假，中间只有两周的休息时间），必然对收获有着一份向往。本人也是如此，打codeforces到24:35几乎成了常">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/09/暑假社会实践报告/PPT.png">
+<meta name="twitter:title" content="2019-2020 ICPC, Asia Jakarta Regional Contest H题题解">
+<meta name="twitter:description" content="题目描述：给n个矩形二维容器(xi×yi)，求面积最大的矩形块A×B，使得两个这样的矩形块能塞进容器里。   塞法有两种：塞在同一个容器；塞在两个不同的容器。前一种情况很水，后一种也不难。枚举矩形块的较小边A，这个较小边也必然是某个容器的较小边。所以只要枚举容器的较小边就行了，这样确定第一个容器；然后在第一条边大于A的容器中，找第二条边的最大值。该值与第一个容器的较大边的较小值，就是矩形块的较大边">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/09/09/暑假社会实践报告/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/">
 
 
 
 
 
-  <title>暑假社会实践报告 | ↑↓CH2's Space</title>
+  <title>2019-2020 ICPC, Asia Jakarta Regional Contest H题题解 | ↑↓CH2's Space</title>
   
 
 
@@ -267,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/09/暑假社会实践报告/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="↑↓CH2">
@@ -284,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">暑假社会实践报告</h1>
+          <h1 class="post-title" itemprop="name headline">2019-2020 ICPC, Asia Jakarta Regional Contest H题题解</h1>
         
 
         <div class="post-meta">
@@ -296,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-09T16:09:39+08:00">
-                2019-09-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-11T18:13:57+08:00">
+                2019-12-11
               </time>
             
 
@@ -315,8 +311,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/09/09/暑假社会实践报告/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/09/暑假社会实践报告/" itemprop="commentCount"></span>
+                <a href="/2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,15 +340,11 @@
       
 
       
-        <p>今年暑假，我参加了西北工业大学的大学生程序设计创新实践基地（ACM基地）的培训。我认为，但凡参加这个培训的同学们，都或多或少怀揣了摘金夺银的梦想。三伏盛夏，谁愿意顶着酷暑，每日早起赶到机房打卡，听课，刷题，敲代码，调试，敲代码，调试，调试呢？既然大家愿意牺牲大量玩的时间（培训时长为一个暑假，中间只有两周的休息时间），必然对收获有着一份向往。本人也是如此，打codeforces到24:35几乎成了常态，希望能以此稍微提升自己的实力，进而能在比赛中取得至少还能说得过去的成绩。</p>
-<p>然而，“行百里者，半于九十”。一些同学参加了初级培训，后续的高级培训却没有参加。如果确实是水平的问题，还可以理解；但即使是初级培训，不少同学仍然觉得困难。有一次，我们吃完饭回机房时，偶尔听到路上有同学对当天讲课的内容疯狂吐槽，嫌讲课的同学只讲题目的大体思路，没有讲任何基础算法；不巧的是，那位讲课的同学就在我们中间，听得一清二楚。事实上，他之前准备讲课时，考虑到部分同学没有算法基础，特意选择了不需要会任何算法的题目；没想到反而因此被吐槽，于是非常郁闷。正好我几天后负责讲解一个基础算法，于是我想，既然大家这么想听算法课，那到时候大家总会认真听了吧？没想到到了那一天，还是有不少同学在狂戳手机……我讲完一段，提出一个问题下去，反馈寥寥无几。当然也有一些同学相当积极，即使回答并不够非常正确，但仍然给我留下了较为深刻的印象。后来我想，也许平时为我们上课的老师，也是这样的想法呢？但就学习而言，基地的培训和平时的上课有本质上的不同。在基地培训，从来不会有人督促学什么内容、哪些是重点、交什么作业……一切都是为了自己实力的提升，最终也只能靠自己提升实力。那些为数不多，坚持到底的同学，水平也因此突飞猛进。</p>
-<p><img src="/2019/09/09/暑假社会实践报告/PPT.png" alt="PPT" title="菜逼的KMP讲课PPT，不知道多少同学能因此有所收获？"></p>
-<p>就我个人而言，水平的提升也得靠自己。原本我以为，个人赛综合rank1，codeforces一度名列西工大在役选手rank1，再稍微下点功夫，就还算说得过去了。现在看来，“不仅天真的令人发笑，而且幼稚的不可理喻”。好多真正的巨佬，一直偷偷拼命努力。不仅是高中就有基础的巨佬，平时非常低调，实力却远超一般人的想象；还有大学开始接触编程、零基础的新巨佬，勤奋刻苦，疯狂刷题，从芸芸众生中脱颖而出。而我却几乎还在原地踏步，该不会的还是不会。现如今，基地里人均杜教筛、人均后缀数组、人均主席树，cf人均紫名，可是我还在被各种水题卡，稍微高级一点的算法（现在都称不上“高级”）又不会。以前为了督促自己刷题写题解，还专门开了github的博客，结果整整一个暑假都没有更新。不敢突破舒适圈，只能安于现状；偶尔想学一个算法，刷了一点题，结果直接被新学的东西“洗脑”，遇到啥题都往那上面想，反倒连本来应该轻松解决的问题都不会了。模拟比赛时还犯各种低级错误，什么忘开long long、忘记清零，本来不会犯的错都犯了。原本指望一个暑假cf能上100+的分，结果只成功了负百分之一。</p>
-<p><img src="/2019/09/09/暑假社会实践报告/codeforces.png" alt="CF掉分" title="菜逼的codeforces积分。暑假前是2014分，经过一个暑假的努力，成功掉到2013分"></p>
-<p>前路依旧漫漫。几个月前，我还可以用“才大一，还有时间”安慰自己，可如今，一切已然没有退路。以前区域赛卡题也没关系，反正还有时间可以练；然而今年区域赛的网络赛（相当于预选赛）已经悄然而至。</p>
-<p><img src="/2019/09/09/暑假社会实践报告/个人赛rank.png" alt="个人赛rank" title="混了个个人赛rank1又能怎么样，菜逼依旧是菜逼"></p>
-<p>The sound of footsteps became louder every day,<br>Then I noticed the fact there was no time.<br>我不希望成为这首《why, or why not》中的悲剧。现在还剩下最后一点时间，能否取得理想的成绩，成败就在此一举。往年的区域赛的可做题有很多，该练的都必须练。cf，网络复现赛，能不落下就尽量不能落。还有，及时写题解，脑洞题可以试着积累一下小结论。除此之外，早睡早起，减少浪费的时间，都是可以做而应当做的。<br>丈夫生世会几时？安能蹀躞垂羽翼！不管是为了自己，还是为了重要的人，只有比别人付出更多，才有可能收获更多（更何况对于我这种菜逼，还得加倍的多）。漂亮话是无济于事的，只有行动和成果才能证明一切。今年年底，一切拭目以待。</p>
-
+        <p>题目描述：给n个矩形二维容器(xi×yi)，求面积最大的矩形块A×B，使得两个这样的矩形块能塞进容器里。  </p>
+<p>塞法有两种：塞在同一个容器；塞在两个不同的容器。前一种情况很水，后一种也不难。枚举矩形块的较小边A，这个较小边也必然是某个容器的较小边。所以只要枚举容器的较小边就行了，这样确定第一个容器；然后在第一条边大于A的容器中，找第二条边的最大值。该值与第一个容器的较大边的较小值，就是矩形块的较大边B。</p>
+<p>于是问题转换成求区间最大值，方法很多，这里采取排序后倒序枚举解决。  </p>
+<p>注意double(精度仅52位)存不下答案，要用long double，或者手动处理long long来输出答案。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *powered by caibiCH2</span></span><br><span class="line"><span class="comment"> *create at 2019-12-11 17:22:23</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-keyword">elif</span> <span class="meta-keyword">else</span> <span class="meta-keyword">if</span></span></span><br><span class="line"><span class="comment">//#define max(x,y) ((x)&gt;(y)?(x):(y))</span></span><br><span class="line"><span class="comment">//#define min(x,y) ((x)&lt;(y)?(x):(y))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msp</span>&#123;</span></span><br><span class="line">	ll x,y;</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> msp&amp;p,<span class="keyword">const</span> msp&amp;q)&#123;</span><br><span class="line">		<span class="keyword">return</span> p.x&lt;q.x;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;a[<span class="number">3000100</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="comment">/*int argc, char const* argv[]*/</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">int</span> n;<span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i+=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;a[i].x&gt;&gt;a[i].y;</span><br><span class="line">		ans=max(ans,a[i].x*a[i].y);</span><br><span class="line">		<span class="keyword">if</span>(a[i].x&gt;a[i].y)swap(a[i].x,a[i].y);</span><br><span class="line">	&#125;</span><br><span class="line">	sort(a+<span class="number">1</span>,a+n+<span class="number">1</span>);</span><br><span class="line">	ll t=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;--i)&#123;</span><br><span class="line">		ans=max(ans,min(a[i].y,t)*a[i].x*<span class="number">2</span>);</span><br><span class="line">		t=max(t,a[i].y);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">double</span> kksk=ans;</span><br><span class="line">	kksk/=<span class="number">2</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;fixed&lt;&lt;setprecision(<span class="number">1</span>)&lt;&lt;kksk&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -369,7 +361,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/反思/" rel="tag"># 反思</a>
+            <a href="/tags/贪心/" rel="tag"># 贪心</a>
           
         </div>
       
@@ -382,8 +374,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/03/南昌邀请赛记——比赛篇/" rel="next" title="南昌邀请赛记——比赛篇">
-                <i class="fa fa-chevron-left"></i> 南昌邀请赛记——比赛篇
+              <a href="/2019/11/10/HDU-4416-题解/" rel="next" title="HDU-4416_题解">
+                <i class="fa fa-chevron-left"></i> HDU-4416_题解
               </a>
             
           </div>
@@ -391,10 +383,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/19/Kuangbin-KMP-O题-LightOJ-1268/" rel="prev" title="Kuangbin_KMP_O题(LightOJ-1268)">
-                Kuangbin_KMP_O题(LightOJ-1268) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -726,9 +714,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2019/09/09/暑假社会实践报告/';
-          this.page.identifier = '2019/09/09/暑假社会实践报告/';
-          this.page.title = '暑假社会实践报告';
+          this.page.url = 'http://yoursite.com/2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/';
+          this.page.identifier = '2019/12/11/2019-2020-ICPC-Asia-Jakarta-Regional-Contest-H题题解/';
+          this.page.title = '2019-2020 ICPC, Asia Jakarta Regional Contest H题题解';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
